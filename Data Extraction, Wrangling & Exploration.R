@@ -36,7 +36,7 @@ View(mps.tabs$expenses_table)
 
 
 # Reading data from CSV File which is already downloaded and saved on drive.
-movie = read.csv("Data/movie_metadata.csv")
+movie = read.csv("Data/Data Extraction, Wrangling & Exploration.csv")
 View(movie)
 class(movie)
 
@@ -64,7 +64,7 @@ movie_df = movie[, c("movie_title", "duration", "budget", "gross", "imdb_score",
 movie_df = na.omit(movie_df)
 
 #Step3:  Remove any special character if exists in the Movie Title.
-movie_df$movie_title =  sub(pattern = "Â", replacement = "", movie_df$movie_title)
+movie_df$movie_title =  sub(pattern = "Ã‚", replacement = "", movie_df$movie_title)
 
 #After the above step we can say we have the processed data on which we can do our analysis.
 
