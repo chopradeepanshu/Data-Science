@@ -4,7 +4,7 @@ getwd()
 # Step 1: Import the data Set.LungCapData_Linear_Regression.xls
 
 library("xlsx")
-LungCapData = read.xlsx("Data/LungCapData_Linear_Regression.xlsx",sheetIndex = 1,header = T)
+LungCapData = read.xlsx("Data/Linear_Regression_LungCapData.xlsx",sheetIndex = 1,header = T)
 
 # Check the Columns Names of the Sheet
 names(LungCapData)
