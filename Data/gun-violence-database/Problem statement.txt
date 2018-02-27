@@ -1,0 +1,11 @@
+The Gun Violence Archive is an online archive of gun violence incidents collected from over 2,000 media, law enforcement, government and commercial sources daily in an effort to provide near-real time data about the results of gun violence. GVA in an independent data collection and research group with no affiliation with any advocacy organization.
+
+Content
+
+This dataset includes files that separate gun violence incidents by category, including deaths and injuries of children and teens, and a collection of mass shootings.
+
+Inspiration
+
+What has been the trend of gun violence in the past few years?
+What states have the highest incidents per capita per year? How has this metric changed over time?
+Are officer involved shootings on the rise? Where are they most concentrated? Do they correlate with the rates of accidental deaths and mass shootings?
