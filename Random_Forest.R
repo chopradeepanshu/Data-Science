@@ -12,9 +12,11 @@ testingData = diabetesData[id==2, ]
 
 # Building Random Forest
 library(randomForest)
-model = randomForest(Is_Diabetic~., data = trainingData)
+model = randomForest(Is_Diabetic~., data = trainingData, ntree = 5)
 model
 
+# This Plot will help you to identify which Attribute is Important in creating Decision
+varImpPlot(model)
 
 prediction = predict(model, newdata = testingData, type =  "class")
 prediction

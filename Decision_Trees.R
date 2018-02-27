@@ -1,7 +1,13 @@
 # Perform Classification Using Decision Trees
+# Decision Tree Model can be developed by 2 Ways - Information Gain Vs Gini Index
+# There is no Major difference in between but we generally prefer Information Gain method.
 
+setwd("C:\\Deeps\\R")
 # Import the data 
 diabetesData = read.csv("Data/M4_Diabetes.csv")
+library(rpart)
+library(rpart.plot)
+library(caret)
 
 
 # Split the data in 70/30 Ratio
@@ -11,19 +17,18 @@ trainingData = diabetesData[id==1, ]
 testingData = diabetesData[id==2, ]
 
 #Building decision trees
-library(rpart)
-model = rpart(Is_Diabetic~., data = trainingData)
+# rpart is the package which is used in Decision Tree making. rpart = Recurrsive Partition.
 
+#INFORMATION GAIN
+#Training the Decision Tree classifier with criterion as information gain
+
+model = rpart(Is_Diabetic~.-No.of_times_pregnant -skin_fold_thickness, data = trainingData)
 model
+summary(model)
+plot(model, uniform=TRUE, main="Classification Tree for Kyphosis")
+text(model, use.n=TRUE, all=TRUE, cex=.8)
 
-# Plot the Graph of Decision Tree.
-plot(model, margin = 0.1)
-text(model, use.n = TRUE, pretty = TRUE, cex = 0.8)
-
-
-# Create Subset and Verify
-temp = trainingData[diabetesData$glucose_conc <154.5 & diabetesData$BMI < 26.35 , ]
-table(temp$Is_Diabetic)
+prp(model, box.palette = "Blues", tweak = 1.2)
 
 # Prediction of Test Data Set
 prediction =  predict(model, newdata = testingData, type = "class")
@@ -33,7 +38,6 @@ prediction
 table(prediction, testingData$Is_Diabetic)
 
 # For getting the confusion matrix we can use the library caret
-library(caret)
 confusionMatrix(table(prediction, testingData$Is_Diabetic))
 # Accuracy = 71%
 
