@@ -1,3 +1,5 @@
+setwd("C:\\Deeps\\R")
+getwd()
 # Perform Logistic Regression.
 
 # Import the data 

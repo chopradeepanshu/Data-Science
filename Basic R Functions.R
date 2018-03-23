@@ -180,6 +180,7 @@ gender_factor
 # Output: male   female female male   male  
 
 gender_numeric = as.integer(gender_factor)
+gender_numeric
 # Output will be Levels: 2 1 1 2 2
 # 2 --> Female and 1 --> Male. As per Alphabetical order
 

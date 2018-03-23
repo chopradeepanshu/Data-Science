@@ -31,6 +31,7 @@ tm_map(removePunctuation) %>%
   tm_map(stripWhitespace) %>%
   tm_map(stemDocument) # Will String down the words to the core - Running, run, runs to run
 
+
 # How many times each word occured within our document , we need to create DocumentTermMatrix.
 dtm = DocumentTermMatrix(CorpusFileText)
 dtm

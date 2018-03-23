@@ -71,7 +71,7 @@ write.csv(BJPScore, file = "C:/Deeps/R/Data/Twitter/BJPScore.csv", row.names = T
 CongressDataset = read.csv("C:/Deeps/R/Data/Twitter/CongressTweets.csv")
 CongressDataset$text = as.factor(CongressDataset$text)
 CongressScore = score.sentiment(CongressDataset$text, pos.words, neg.words, .progress = "text")
-write.csv(BJPScore, file = "C:/Deeps/R/Data/Twitter/CongressScore.csv", row.names = T)
+write.csv(CongressScore, file = "C:/Deeps/R/Data/Twitter/CongressScore.csv", row.names = T)
 # We can convert into Text. We need to extract Text from Tweets.
 
 BJPText = lapply(BJPTweets, function(x) x$getText())
@@ -91,20 +91,60 @@ mean(analysisCongress$score)
 
 
 # Comparing Scores
-plot1 = hist(analysisBJP$score)
-plot2 = hist(analysisCongress$score)
+BJPPlot = hist(analysisBJP$score)
+CongressPlot = hist(analysisCongress$score)
 
   
-plot(plot1, 
-     col = rgb(1,0,0),
+plot(BJPPlot, 
+     col = rgb(0,1,0),
     main = "BJP Vs Congress",
     xlab = "Scores")
-plot(plot2, col = rgb(0,1,0), add = T)
-
+plot(CongressPlot, col = rgb(1,0,0), add = T)
 
 
 # Creating word Cloud Around BJP and Congress
 
-wordcloud(BJPDataset$text, col = brewer.pal(8, "Set2") ,min.freq = 1 )
-wordcloud(CongressDataset$text, col = brewer.pal(8, "Set2") ,min.freq = 1 )
+BJPCoupus <- VCorpus(VectorSource(BJPDataset$text)) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(content_transformer(tolower)) %>%
+  tm_map(removeWords, stopwords("english")) %>%
+  tm_map(stripWhitespace) %>%
+  tm_map(stemDocument)
+
+
+BJPDTM = DocumentTermMatrix(BJPCoupus)
+BJPDTM = removeSparseTerms(BJPDTM, 0.99)
+
+wordsWithFrequency = sort(colSums(as.matrix(BJPDTM)), decreasing = T)
+View(wordsWithFrequency)
+
+BJPDataFrame = data.frame(word = names(wordsWithFrequency), freq = wordsWithFrequency)
+
+wordcloud(words = BJPDataFrame$word, freq = BJPDataFrame$freq, min.freq = 1, max.words = 200, 
+          random.order = FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
+
+CongressCoupus <- VCorpus(VectorSource(CongressDataset$text)) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(content_transformer(tolower)) %>%
+  tm_map(removeWords, stopwords("english")) %>%
+  tm_map(stripWhitespace) %>%
+  tm_map(stemDocument)
+
+
+CongressDTM = DocumentTermMatrix(CongressCoupus)
+CongressDTM = removeSparseTerms(CongressDTM, 0.99)
+
+wordsWithFrequency = sort(colSums(as.matrix(CongressDTM)), decreasing = T)
+View(wordsWithFrequency)
+
+CongressDataFrame = data.frame(word = names(wordsWithFrequency), freq = wordsWithFrequency)
+
+wordcloud(words = CongressDataFrame$word, freq = CongressDataFrame$freq, min.freq = 1, max.words = 200, 
+          random.order = FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
 
